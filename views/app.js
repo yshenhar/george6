@@ -1,11 +1,4 @@
-var React   = require('react');
+var r = require('react');
+var view = require('./register').view;
 
-var Hello = React.createFactory(
-  React.createClass({
-    render: function() {
-      return React.DOM.div({}, 'Hello ' + this.props.name);
-    }
-  })
-);
-
-React.render(Hello({name: 'World'}), document.body);
+r.render(view(), document.body);
