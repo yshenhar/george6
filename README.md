@@ -11,3 +11,7 @@ Development
 3. ``grunt watch``
 4. ``node bin/www``
 5. [http://localhost:3000] (http://localhost:3000)
+
+TODO
+----
+[On google doc] (https://docs.google.com/document/d/1QcAbiluQ7-Dst1oexYslQRkJXvJrXnWogmC5cEasAOg/edit)
