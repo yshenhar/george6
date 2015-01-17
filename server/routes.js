@@ -7,6 +7,4 @@ router.route('/register').post(function(req, res) {
   res.send({ message: 'Registered' });
 });
 
-router.use('/', express.static(__dirname + '/static'));
-
 module.exports = router;

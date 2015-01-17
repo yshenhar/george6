@@ -4,6 +4,7 @@ var dom = React.DOM;
 
 var Boostrap = require('react-bootstrap');
 var input = Boostrap.Input;
+var label = Boostrap.Label;
 var panel = Boostrap.Panel;
 var button = Boostrap.Button;
 
@@ -19,13 +20,20 @@ var view = React.createClass({
   render: function() {
     if(!this.state.submitted) {
       return (
-        dom.form(null,
-          elem(input, {onChange: this.onChange.bind(this, 'firstname'), value: this.state.firstname, type: "text", placeholder: "first name"}),
-          elem(input, {onChange: this.onChange.bind(this, 'lastname'), value: this.state.lastname, type: "text", placeholder: "last name"}),
-          elem(button, {className:"btn btn-primary btn-block",
-                        bsStyle: "primary",
-                        onClick: this.handleSubmit,
-                        value: "Submit button"})
+        dom.div({className: 'row register-form '},
+          dom.div({className: 'col-md-4'}),
+          dom.div({className: 'col-md-4'},
+              dom.div({className: 'panel panel-default'},
+                dom.div({className: 'panel-body'},
+                  dom.div({className: 'form-horizontal'}, [
+                    elem(input, {label: 'First Name', onChange: this.onChange.bind(this, 'firstname'), value: this.state.firstname, type: "text", placeholder: "first name"}),
+                    elem(input, {label: 'Last Name', onChange: this.onChange.bind(this, 'lastname'), value: this.state.lastname, type: "text", placeholder: "last name"}),
+                    elem(button, {className:"btn btn-primary btn-block", bsStyle: "primary", onClick: this.handleSubmit, value: "Submit button"}, 'submit')
+                  ])
+                )
+              )
+          ),
+          dom.div({className: 'col-md-4'})
         )
       );
     } else {

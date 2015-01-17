@@ -17,11 +17,21 @@ module.exports = function(grunt) {
         src: ['client/**/*.js'],
         dest: 'server/static/app-bundle.js'
       }
+    },
+
+    run: {
+      george6: {
+        cmd: 'node',
+        args: [
+          'bin/www'
+        ]
+      }
     }
   });
 
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-run');
 
-  grunt.registerTask('default', ['browserify']);
+  grunt.registerTask('default', ['browserify', 'run:george6']);
 };
