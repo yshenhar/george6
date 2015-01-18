@@ -1,3 +1,5 @@
+'use strict';
+
 var r = require('react');
 var view = require('./register').view;
 

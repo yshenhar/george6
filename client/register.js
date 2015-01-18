@@ -1,12 +1,16 @@
+'use strict';
+
+var _ = require('lodash');
+
 var React = require('react');
 var elem = React.createElement;
 var dom = React.DOM;
 
 var Boostrap = require('react-bootstrap');
 var input = Boostrap.Input;
-var label = Boostrap.Label;
-var panel = Boostrap.Panel;
 var button = Boostrap.Button;
+
+var http = require('./httpasync');
 
 var view = React.createClass({
   getInitialState: function() {
@@ -50,9 +54,8 @@ var view = React.createClass({
 
   handleSubmit: function(e) {
     e.preventDefault();
-    this.setState({submitted: true,
-                   firstname: this.state.firstname,
-                   lastname: this.state.firstname})
+    this.setState({submitted: true, firstname: this.state.firstname, lastname: this.state.firstname});
+    http.post('http://localhost:3000/api/register', {firstname: this.state.firstname, lastname: this.state.firstname});
   }
 });
 

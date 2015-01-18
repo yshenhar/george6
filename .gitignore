@@ -3,3 +3,4 @@ output/
 .settings/
 node/
 node_modules/
+app-bundle.js
