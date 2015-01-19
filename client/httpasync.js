@@ -1,19 +1,23 @@
 'use strict';
 
-var Promise = require("bluebird");
-var request = Promise.promisify(require("request"));
+var request = require('request-promise');
 
 function get(url) {
-  return request({method: 'GET', url: url});
+  return request({
+    simple: true,
+    method: 'GET',
+    url: url
+  });
 }
 
 function post(url, data) {
   return request({
+    simple: true,
     method: 'POST',
     url: url,
     json: true,
     body: data
-  });
+  })
 }
 
 module.exports = {
