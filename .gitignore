@@ -4,3 +4,4 @@ output/
 node/
 node_modules/
 app-bundle.js
+test-bundle.js

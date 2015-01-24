@@ -14,8 +14,12 @@ module.exports = function(grunt) {
         transform: [ require('grunt-react').browserify ]
       },
       client: {
-        src: ['client/**/*.js'],
-        dest: 'server/static/app-bundle.js'
+        src: ['src/client/**/*.js'],
+        dest: 'src/server/static/app-bundle.js'
+      },
+      clientTests: {
+        src: ['src/tests/client/**/*-spec.js'],
+        dest: 'src/tests/client/test-bundle.js'
       }
     },
 
@@ -26,12 +30,25 @@ module.exports = function(grunt) {
           'bin/www'
         ]
       }
+    },
+
+    mocha: {
+      options: {
+        run: true
+      },
+      clientTests: {
+        src: ['src/tests/client/**/*.html']
+      }
+
     }
+
   });
 
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-run');
+  grunt.loadNpmTasks('grunt-mocha');
 
+  grunt.registerTask('clientTests', ['browserify', 'mocha:clientTests']);
   grunt.registerTask('default', ['browserify', 'run:george6']);
 };
