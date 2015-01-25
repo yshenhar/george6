@@ -3,5 +3,7 @@ output/
 .settings/
 node/
 node_modules/
+.grunt/
 app-bundle.js
 test-bundle.js
+george6.iml

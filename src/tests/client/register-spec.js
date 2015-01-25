@@ -1,9 +1,10 @@
 'use strict';
 
-var expect = require('chai').expect;
+var registerView = require('../../client/register');
 
-describe('hello world', function(){
-  it('supports assertions', function(){
-    expect(true).to.equal(true);
+describe('a react view', function(){
+  it('can be tested', function(){
+    var view = registerView.view;
+    expect(view).not.toBeUndefined();
   });
 });

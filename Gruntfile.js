@@ -2,24 +2,45 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
 
-    watch: {
-      react: {
-        files: 'client/*.js',
-        tasks: ['browserify']
+    clean: ['./output'],
+
+    connect: {
+      server: {
+        options: {
+          port: 3001
+        }
       }
     },
 
     browserify: {
       options: {
-        transform: [ require('grunt-react').browserify ]
+        browserifyOptions: {
+          debug: true,
+          insertGlobals: true
+        }
       },
       client: {
-        src: ['src/client/**/*.js'],
-        dest: 'src/server/static/app-bundle.js'
+        options: {
+          transform: [ require('grunt-react').browserify ],
+          preBundleCB: function (b) {
+            b.require('./src/client/entry-point.js', {expose: 'app'});
+          }
+        },
+        src: './src/client/app.js',
+        dest: './output/static/app-bundle.js'
       },
       clientTests: {
-        src: ['src/tests/client/**/*-spec.js'],
-        dest: 'src/tests/client/test-bundle.js'
+        src: ['./src/tests/client/**/*-spec.js'],
+        dest: './output/static/test-bundle.js'
+      }
+    },
+
+    copy: {
+      server: {
+        expand: true,
+        cwd: './src/server/',
+        src: '**',
+        dest: './output/'
       }
     },
 
@@ -27,28 +48,49 @@ module.exports = function(grunt) {
       george6: {
         cmd: 'node',
         args: [
-          'bin/www'
+          './bin/www'
         ]
       }
     },
 
-    mocha: {
-      options: {
-        run: true
-      },
-      clientTests: {
-        src: ['src/tests/client/**/*.html']
+    jasmine: {
+      spec: {
+        options: {
+          specs: './output/static/test-bundle.js',
+          outfile: './output/static/SpecRunner.html',
+          host: 'http://127.0.0.1:3001',
+          keepRunner: true
+        }
       }
+    },
 
+    open: {
+      dev: {
+        path: './output/static/SpecRunner.html'
+      }
     }
-
   });
 
   grunt.loadNpmTasks('grunt-browserify');
-  grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-run');
-  grunt.loadNpmTasks('grunt-mocha');
+  grunt.loadNpmTasks('grunt-open');
+  grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-contrib-jasmine');
+  grunt.loadNpmTasks('grunt-contrib-connect');
 
-  grunt.registerTask('clientTests', ['browserify', 'mocha:clientTests']);
-  grunt.registerTask('default', ['browserify', 'run:george6']);
+  grunt.registerTask('default', [
+    'clean',
+    'copy:server',
+    'browserify',
+    'connect',
+    'jasmine:spec:run',
+    'run:george6']);
+
+  grunt.registerTask('clientTDD', [
+    'clean',
+    'copy:server',
+    'browserify',
+    'jasmine:spec:build',
+    'open:dev']);
 };
