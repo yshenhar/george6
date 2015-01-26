@@ -17,7 +17,9 @@
     "grunt-mocha": "0.4.11",
     "grunt-open": "0.2.3",
     "grunt-react": "0.10.0",
-    "grunt-run": "0.3.0"
+    "grunt-run": "0.3.0",
+    "frisby": "latest",
+    "jasmine-node": "latest"
   },
   "dependencies": {
     "lodash": "2.4.1",
