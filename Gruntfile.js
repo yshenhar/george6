@@ -68,6 +68,16 @@ module.exports = function(grunt) {
       dev: {
         path: './output/static/SpecRunner.html'
       }
+    },
+
+    watch: {
+      scripts: {
+        files: ['./src/**/*.js'],
+        tasks: ['browserify'],
+        options: {
+          spawn: false
+        }
+      }
     }
   });
 
@@ -78,6 +88,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-jasmine');
   grunt.loadNpmTasks('grunt-contrib-connect');
+  grunt.loadNpmTasks('grunt-contrib-watch');
 
   grunt.registerTask('default', [
     'clean',
@@ -92,5 +103,6 @@ module.exports = function(grunt) {
     'copy:server',
     'browserify',
     'jasmine:spec:build',
-    'open:dev']);
+    'open:dev',
+    'watch:scripts']);
 };
