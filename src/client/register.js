@@ -10,7 +10,7 @@ var Boostrap = require('react-bootstrap');
 var input = Boostrap.Input;
 var button = Boostrap.Button;
 
-var http = require('./httpasync');
+var http = require('./http-async').create();
 
 var view = React.createClass({
   getInitialState: function() {
@@ -58,7 +58,7 @@ var view = React.createClass({
   handleSubmit: function(e) {
     e.preventDefault();
 
-    http.post('http://localhost:3000/api/register', {firstname: this.state.firstname, lastname: this.state.firstname})
+    http.post('api/register', {firstname: this.state.firstname, lastname: this.state.firstname})
       .then(function() {
         this.setState({submitted: true});
       }.bind(this))
